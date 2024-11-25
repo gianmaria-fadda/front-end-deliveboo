@@ -9,6 +9,7 @@
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
 import AppFooter from './components/AppFooter.vue';
+import axios from 'axios';
 
 export default {
   data() {
@@ -22,10 +23,23 @@ export default {
     AppMain,
     AppFooter
   },
+  mounted() {
+    this.getRestaurants
+  },
   methods: {
-    
+    getRestaurants() {
+    axios
+        .get('URL_DELLA_TUA_API') 
+        .then((res) => {
+            console.log(res.data); 
+        })
+        .catch((error) => {
+            console.error('Errore durante il recupero dei dati:', error);
+        });
+    }
   }
 }
+
 </script>
 
 <template>
