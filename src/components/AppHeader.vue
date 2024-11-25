@@ -23,6 +23,10 @@ export default {
       Registrati
     </router-link>
 
+    <router-link :to="{ name:'new-dish' }" class="nav-link">
+      Aggiungi nuovo piatto
+    </router-link>
+
   </header>
 </template>
 
