@@ -11,12 +11,16 @@ export default {
 <template>
   <header>
 
-    <router-link :to="{ name:'dashboard' }" class="nav-link">
+    <router-link :to="{ name:'home' }" class="nav-link">
+      Pagina Iniziale
+    </router-link>
+
+    <router-link :to="{ name:'login' }" class="nav-link">
       Login
     </router-link>
 
-    <router-link :to="{ name:'home' }" class="nav-link">
-      HomePage
+    <router-link :to="{ name:'register' }" class="nav-link">
+      Registrati
     </router-link>
 
   </header>

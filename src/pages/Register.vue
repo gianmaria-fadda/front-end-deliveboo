@@ -10,7 +10,7 @@ export default {
 
 <template>
   <header>
-    Questa è la home page
+    Register
   </header>
 </template>
 
