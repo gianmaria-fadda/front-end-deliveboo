@@ -10,15 +10,7 @@ export default {
 
 <template>
   <header>
-
-    <router-link :to="{ name:'dashboard' }" class="nav-link">
-      Login
-    </router-link>
-
-    <router-link :to="{ name:'home' }" class="nav-link">
-      HomePage
-    </router-link>
-
+   Questa è la home page
   </header>
 </template>
 
