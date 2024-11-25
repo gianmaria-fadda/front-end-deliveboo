@@ -10,7 +10,7 @@ export default {
 
 <template>
   <header>
-   ciaoooooooooo
+    Login
   </header>
 </template>
 
