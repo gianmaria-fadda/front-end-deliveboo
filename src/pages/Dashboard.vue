@@ -1,6 +1,4 @@
 <script>
-import { RouterView } from 'vue-router';
-
 export default {
   data() {
     return { 
@@ -11,9 +9,9 @@ export default {
 </script>
 
 <template>
-   <!-- route outlet -->
-  <!-- component matched by the route will render here -->
-  <router-view></router-view>
+  <header>
+   ciaoooooooooo
+  </header>
 </template>
 
 <style lang="scss" scoped>
