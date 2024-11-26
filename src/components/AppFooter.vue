@@ -83,6 +83,20 @@ footer {
       }
     }
   }  
+
+}
+
+
+h2 {
+
+  a {
+    font-family: "Chewy", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+  }
+
+
 }
 
 

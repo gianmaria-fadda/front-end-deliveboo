@@ -89,7 +89,9 @@ export default {
 
 main {
   width: 100vw;
-  background-color: $mainColor;
+  background-image: url(../../public/img/logo-white.png);
+  background-repeat: repeat;
+  background-position: center;
   padding: 100px;
   text-align: left;
 
