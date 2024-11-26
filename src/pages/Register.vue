@@ -10,6 +10,8 @@ export default {
 
 <template>
   <div>
+
+    <!-- aggiungere i campi contrassegnati bla bla bla -->
     <form action="">
 
       <!-- Nome attività -->
@@ -38,7 +40,7 @@ export default {
         </div>
         <div class="col-auto">
           <span id="passwordHelpInline" class="form-text">
-            La password eeve essere almeno di 8 caratteri.
+            La password deve essere almeno di 8 caratteri.
           </span>
         </div>
       </div>

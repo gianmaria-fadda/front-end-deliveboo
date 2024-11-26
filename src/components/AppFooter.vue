@@ -11,16 +11,42 @@ export default {
 <template>
   <footer>
     <div class="container">
+      <div class="row justify-content-between">
+
+        <div class="col-xl-3 col-lg-2 col-sm-2 ">
+          <!-- Footer info --> 
+          <h5>Info</h5>
+          <ul>
+            <li><a href="#">Termini di utilizzo</a></li>
+            <li><a href="#">Informativa sulla privacy</a></li>
+            <li><a href="#">Contattaci</a></li>
+          </ul>
+        </div>
+
+        <!-- Socials -->
+        <div class="col-xl-3 col-lg-2 col-sm-2 pt-5">
+          <div class="follow">
+            Seguici sui social!
+          </div>
+            <a href="" class="pe-2">
+              <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+        </div>
+      </div>
+      <!-- Copyrights -->
       <div class="row justify-content-between align-items-center">
         <div class="col-xl-2 col-lg-2 col-sm-2 ">
           <h2>
-            DeliveBoo
+            <a href="">DeliveBoo</a>
           </h2>
         </div>
         <div class="col-xl-2 col-lg-2 col-sm-2">
           <i class="fa-regular fa-copyright text-light"></i>
           <span>
-            2024 Deliveroo
+            2024 DeliveBoo
           </span>
         </div>
       </div>
@@ -33,26 +59,41 @@ export default {
 
 footer {
 
-  background-color: black;
+  height: 250px;
+  background-color: $secondColor;
+  color: white;
+
+  a:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
 
   .container {
 
+    padding: 40px;
     .row {
 
-      height: 50px;
+
       .col-xl-2 > *{
 
         color: white;
-        opacity: 0.8;
         text-align: center;
         
-        &:hover {
-
-          cursor: pointer;
-          opacity: 1;
-        }
+        
       }
     }
   }  
+}
+
+
+// Link
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
 </style>
