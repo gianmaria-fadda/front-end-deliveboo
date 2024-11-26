@@ -22,21 +22,6 @@ export default {
     AppHeader,
     AppMain,
     AppFooter
-  },
-  mounted() {
-    this.getRestaurants
-  },
-  methods: {
-    getRestaurants() {
-    axios
-        .get('URL_DELLA_TUA_API') 
-        .then((res) => {
-            console.log(res.data); 
-        })
-        .catch((error) => {
-            console.error('Errore durante il recupero dei dati:', error);
-        });
-    }
   }
 }
 

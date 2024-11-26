@@ -13,7 +13,13 @@ export default {
 <template>
    <!-- route outlet -->
   <!-- component matched by the route will render here -->
-  <router-view></router-view>
+   <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <router-view></router-view>
+      </div>
+    </div>
+   </div>
 </template>
 
 <style lang="scss" scoped>

@@ -12,7 +12,7 @@ export default {
   <header>
     <div class="nav-margin">
       <nav class="navbar bg-body-tertiary fixed-top">
-        <div class="container-fluid">
+        <div class="container-fluid mx-5">
           <a class="navbar-brand" href="#">Deliveboo</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -66,8 +66,17 @@ export default {
 
 header {
 
-.nav-margin {
+  .nav-margin {
+
     margin-bottom: 60px;
+    
+    nav {
+
+      .container-fluid {
+
+        
+      }
+    }
   }
 }
 
