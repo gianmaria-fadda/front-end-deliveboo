@@ -66,8 +66,17 @@ export default {
 
 header {
 
-.nav-margin {
+  .nav-margin {
+
     margin-bottom: 60px;
+    
+    nav {
+
+      .container-fluid {
+
+        
+      }
+    }
   }
 }
 

@@ -22,18 +22,6 @@ export default {
     AppHeader,
     AppMain,
     AppFooter
-  },
-  mounted() {
-    this.getRestaurants();
-  },
-  methods: {
-    getRestaurants() {
-    axios
-        .get('http://127.0.0.1:8000/api/public/restaurants')
-        .then((res) => {
-            console.log(res.data); 
-        });
-    }
   }
 }
 
