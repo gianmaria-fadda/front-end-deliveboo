@@ -24,17 +24,14 @@ export default {
     AppFooter
   },
   mounted() {
-    this.getRestaurants
+    this.getRestaurants();
   },
   methods: {
     getRestaurants() {
     axios
-        .get('URL_DELLA_TUA_API') 
+        .get('http://127.0.0.1:8000/api/public/restaurants')
         .then((res) => {
             console.log(res.data); 
-        })
-        .catch((error) => {
-            console.error('Errore durante il recupero dei dati:', error);
         });
     }
   }
