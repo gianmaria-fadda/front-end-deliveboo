@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage.vue';
 import Login from './pages/Login.vue';
 import Register from './pages/Register.vue';
 import Dish from './pages/Dish.vue';
+import Restaurant from './pages/Restaurant.vue';
 
 
 const router = createRouter({
@@ -28,6 +29,11 @@ const router = createRouter({
             path: '/',
             name: 'new-dish',
             component: Dish
+        },
+        {
+            path: '/',
+            name: 'restaurant',
+            component: Restaurant
         }
     ]
 });

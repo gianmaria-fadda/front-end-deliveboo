@@ -21,22 +21,26 @@ export default {
     }
   }
 }
+
+
+
+
 </script>
 
 <template>
   <div>
     <div class="container d-flex justify-content-around flex-wrap">
       
-      <!-- Cards ristoranti -->
-      <div class="card" style="width: 18rem;" v-for="(restaurant,i) in restaurants" key="id">
-        <router-link :to="{ name:'restaurant' }">
+
+      <!-- Ristorante -->
+      <div class="card" style="width: 18rem;">
+        <a href="">
           <img :src="restaurant.image" class="card-img-top" alt="...">
-        </router-link>
+        </a>
 
         <div class="card-body">
-          <router-link :to="{ name:'restaurant' }">
-            <h5 class="card-title">{{ restaurant.name}}</h5>
-          </router-link>
+          <h5 class="card-title">{{ restaurant.name}}</h5>
+          <h6>{{ restaurant.name}}</h6>
           <p class="card-text">{{ restaurant.description}}</p>
         </div>
       </div>
