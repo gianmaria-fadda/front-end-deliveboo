@@ -7,6 +7,7 @@ import Dish from './pages/Dish.vue';
 import Restaurant from './pages/Restaurant.vue';
 
 
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -31,10 +32,11 @@ const router = createRouter({
             component: Dish
         },
         {
-            path: '/',
+            path: '/restaurant/:id',
             name: 'restaurant',
             component: Restaurant
         }
+          
     ]
 });
 

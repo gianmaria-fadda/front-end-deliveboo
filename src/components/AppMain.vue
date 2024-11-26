@@ -14,8 +14,8 @@ export default {
    <!-- route outlet -->
   <!-- component matched by the route will render here -->
    <div class="container-fluid">
-    <div class="row">
-      <div class="col">
+    <div class="row p-0">
+      <div class="col p-0">
         <router-view></router-view>
       </div>
     </div>

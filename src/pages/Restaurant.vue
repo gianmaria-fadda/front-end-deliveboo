@@ -4,62 +4,122 @@ import axios from 'axios';
 export default {
   data() {
     return { 
-      restaurants: []
+      restaurant: {}
     }
   },
+  // Variabile per salvare l'id
   mounted() {
-    this.getRestaurants();
+    const restaurantId = this.$route.params.id; 
+    this.getSingleRestaurant(restaurantId);
   },
   methods: {
-    getRestaurants() {
+    getSingleRestaurant(id) {
     axios
-        .get('http://127.0.0.1:8000/api/public/restaurants')
-        .then((res) => {
-            console.log(res.data); 
-            this.restaurants= res.data;
-        });
+    // Metto il parametro ID nella rotta
+    .get(`http://127.0.0.1:8000/api/public/restaurant/${id}`) 
+    .then((res) => {
+        console.log(res.data); 
+        this.restaurant= res.data;
+    });
     }
   }
 }
-
-
-
-
 </script>
 
 <template>
-  <div>
-    <div class="container d-flex justify-content-around flex-wrap">
+  <main>
+    <div class="container d-flex justify-content-around flex-wrap p-0">
       
-
       <!-- Ristorante -->
-      <div class="card" style="width: 18rem;">
+      <div class="card mb-3">
         <a href="">
           <img :src="restaurant.image" class="card-img-top" alt="...">
         </a>
 
         <div class="card-body">
-          <h5 class="card-title">{{ restaurant.name}}</h5>
-          <h6>{{ restaurant.name}}</h6>
+          <h1 class="card-title">{{ restaurant.name}}</h1>
           <p class="card-text">{{ restaurant.description}}</p>
+          <p class="card-text"><small class="text-body-secondary">
+            <i class="fa-solid fa-location-dot"></i>
+             Il ristorante si trova presso: {{ restaurant.address}}
+          </small></p>
+
+          <!-- Container generale sezione piatti-->
+          <div class="dishes_container">
+            <h3>
+              Piatti
+            </h3>
+
+            <!-- Container delle cards dei piatti -->
+            <div class="dishes_cards_container d-flex flex-wrap justify-content-even">
+
+              <div class="card mb-3 me-4" style="width: 18rem;" v-for="(product,i) in restaurant.products" key="product.id">
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.name}}</h5>
+                  <div>
+                    {{ product.price }}€
+                  </div>
+                  <p class="card-text">
+                    <span class="fw-semibold text-decoration-underline">Ingredienti:</span>
+                    {{ product.ingredients}}
+                  </p>    
+                </div>
+
+                <!-- Bottone per aggiungere il piatto al carrello -->
+                <button type="button" class="btn btn-dark">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+
+                <!-- Da aggiungere al click metti la quantità -->
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
-  </div>
+
+
+  </main>
 </template>
 
 <style lang="scss" scoped>
 @use '../assets/scss/partials/variables' as *;
 
 
-a {
-  text-decoration: none;
-  color: black;
+main {
+  width: 100vw;
+  background-color: $mainColor;
+  padding: 100px;
+  text-align: left;
 
-  &:hover {
-    color: $mainColor;
-    opacity: 0.8;
+  a {
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+      color: $mainColor;
+      opacity: 0.8;
+    }
+  }
+
+  .card {
+    width: 100%;
+  }
+  .card-title {
+    font-family: "Chewy", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .btn-dark {
+    background-color: $mainColor;
+    border: none;
+    border-radius: 0;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 
