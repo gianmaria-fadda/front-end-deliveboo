@@ -56,7 +56,7 @@ export default {
           </div>
 
           <!-- Bottone -->
-          <button type="submit" class="btn btn-primary">Registrati</button>
+          <button type="submit" class="btn btn-primary">Login</button>
 
           </form>
       </div>

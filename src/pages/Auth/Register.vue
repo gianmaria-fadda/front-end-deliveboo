@@ -51,12 +51,17 @@ export default {
       formData.append('address', this.form.address);
       formData.append('description', this.form.description);
       formData.append('piva', this.form.piva);
-      formData.append('categories', this.form.categories);
 
       // Se c'è un'immagine, aggiungila al formData
       if (this.form.image) {
         formData.append('image', this.form.image);
       }
+
+      // Aggiungi le Categorie come Array
+      this.form.categories.forEach(category => {
+      formData.append('categories[]', category);  // Usa categories[] per inviare un array
+      })
+      
 
       // Esegui la richiesta POST per registrare l'utente e il ristorante
       axios.post('http://127.0.0.1:8000/api/auth/register', formData)
