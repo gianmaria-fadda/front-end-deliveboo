@@ -153,4 +153,21 @@ a {
   display: flex;
   flex-direction: column;
 }
+
+// Colore delle checkbox
+
+.form-check-input:checked {
+  background-color: $mainColor; /* Cambia colore */
+  border-color: $mainColor;    /* Cambia il bordo */
+  box-shadow: none;
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba($mainColor, 0.25); /* Arancione con trasparenza */
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba($mainColor, 0.25); 
+}
+
 </style>
