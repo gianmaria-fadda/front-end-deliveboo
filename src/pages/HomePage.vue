@@ -6,18 +6,21 @@ export default {
   data() {
     return { 
       restaurants: [],
+      categories: [],
+      selectedCategories: [], // Categorie selezionate
       searchQuery: "" // Valore della barra di ricerca
     }
   },
   mounted() {
     this.getRestaurants();
+    this.getCategories();
   },
   methods: {
     async getRestaurants() {
       try {
         const res = await axios.get("http://127.0.0.1:8000/api/public/restaurants");
         this.restaurants = res.data; // Salva i dati nella proprietà restaurants
-        console.log(res.data)
+        console.log("Ristoranti recuperati:", res.data);
       } catch (error) {
         console.error("Errore nel recupero dei ristoranti:", error);
         alert("Impossibile recuperare i dati dei ristoranti.");
@@ -25,61 +28,100 @@ export default {
     },
     async getCategories() {
       try {
-        const res = await axios.get("http://127.0.0.1:8000/api/public/restaurants-categories");
-        this.categories = res.data; // Salva i dati nella proprietà restaurants
-        console.log(res.data)
+        const res = await axios.get("http://127.0.0.1:8000/api/public/restaurant-categories");
+        this.categories = res.data; // Salva i dati nella proprietà categories
+        console.log("Categorie recuperate:", res.data);
       } catch (error) {
-        console.error("Errore nel recupero dei ristoranti:", error);
-        alert("Impossibile recuperare i dati dei ristoranti.");
+        console.error("Errore nel recupero delle categorie:", error);
+        alert("Impossibile recuperare i dati delle categorie.");
+        console.log("Errore dettagliato:", error.response ? error.response.data : error.message);
       }
-    },
+    }
   },
-    computed: {
-    // Filtra i ristoranti in base al nome inserito nella barra di ricerca
+  computed: {
+    // Filtra i ristoranti in base al nome inserito nella barra di ricerca e alle categorie selezionate
     filteredRestaurants() {
-  return this.restaurants.filter((restaurant) => {
-    const normalizedName = restaurant.name.toLowerCase().replace(/\s+/g, ""); // Rimuove tutti gli spazi
-    const normalizedQuery = this.searchQuery.toLowerCase().replace(/\s+/g, ""); // Rimuove tutti gli spazi
-    return normalizedName.includes(normalizedQuery);
-  });
-}
-}
-}
+      return this.restaurants.filter((restaurant) => {
+        const normalizedName = restaurant.name.toLowerCase().replace(/\s+/g, ""); // Rimuove tutti gli spazi
+        const normalizedQuery = this.searchQuery.toLowerCase().replace(/\s+/g, ""); // Rimuove tutti gli spazi
+        const matchesSearchQuery = normalizedName.includes(normalizedQuery);
 
+        // Filtra in base alle categorie selezionate (tutti i ristoranti devono avere tutte le categorie selezionate)
+        const matchesCategory =
+          this.selectedCategories.length === 0 ||
+          this.selectedCategories.every((selectedCategory) =>
+            restaurant.categories.some((category) => category.id === selectedCategory)
+          );
+
+        return matchesSearchQuery && matchesCategory;
+      });
+    }
+  }
+};
 </script>
 
 <template>
   <div>
-    <div class="container d-flex justify-content-around flex-wrap">
+    <div class="container-fluid px-3">
       <!-- Barra di ricerca -->
-    <div class="container my-4">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Cerca un ristorante..."
-        v-model="searchQuery"
-      />
-    </div>
-      <!-- Cards ristoranti -->
-      <div class="card mb-3" style="width: 18rem;" v-for="(restaurant) in filteredRestaurants" :key="restaurant.id">
-        <router-link :to="{ name:'restaurant' , params: { id: restaurant.id }}">
-          <img :src="restaurant.image" class="card-img-top" alt="...">
-        </router-link>
-
-        <div class="card-body">
-          <router-link :to="{ name:'restaurant', params: { id: restaurant.id } }">
-            <h5 class="card-title">{{ restaurant.name}}</h5>
-          </router-link>
-          <p class="card-text">{{ restaurant.description}}</p>
-          <ul>
-            Categorie:
-            <li v-for="category in restaurant.categories" :key="category.id">
-              {{ category.name }}
-            </li>
-          </ul>
+      <div class="row my-3">
+        <div class="col-12 col-md-8 col-lg-6 mx-auto">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Cerca un ristorante..."
+            v-model="searchQuery"
+          />
         </div>
       </div>
 
+      <!-- Checkbox delle categorie -->
+      <div class="row my-2">
+        <div class="col-12">
+          <h5>Filtra per categorie:</h5>
+          <div class="d-flex flex-wrap justify-content-start">
+            <div v-for="category in categories" :key="category.id" class="form-check me-3 mb-2">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                :id="category.id"
+                :value="category.id"
+                v-model="selectedCategories"
+                @change="() => console.log('Categorie selezionate:', selectedCategories)"
+              />
+              <label class="form-check-label" :for="category.id">{{ category.name }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards ristoranti -->
+      <div v-if="filteredRestaurants.length > 0" class="container-fluid mt-3">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" v-for="(restaurant) in filteredRestaurants" :key="restaurant.id">
+            <div class="card h-100">
+              <router-link :to="{ name:'restaurant' , params: { id: restaurant.id }}">
+                <img :src="restaurant.image" class="card-img-top" alt="...">
+              </router-link>
+              <div class="card-body">
+                <router-link :to="{ name:'restaurant', params: { id: restaurant.id } }">
+                  <h5 class="card-title">{{ restaurant.name}}</h5>
+                </router-link>
+                <p class="card-text">{{ restaurant.description}}</p>
+                <ul>
+                  Categorie:
+                  <li v-for="category in restaurant.categories" :key="category.id">
+                    {{ category.name }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <p class="text-center">Nessun ristorante trovato</p>
+      </div>
     </div>
   </div>
 </template>
@@ -87,8 +129,8 @@ export default {
 <style lang="scss" scoped>
 @use '../assets/scss/partials/variables' as *;
 
-.container {
-  padding: 80px;
+.container-fluid {
+  padding: 15px;
 }
 
 a {
@@ -105,5 +147,10 @@ a {
   font-family: "Chewy", system-ui;
   font-weight: 400;
   font-style: normal;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
 }
 </style>
