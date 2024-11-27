@@ -221,6 +221,6 @@ export default {
 }
 
 .big_container {
-  padding: 100px;
+  padding: 50px 100px;
 }
 </style>
