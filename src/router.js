@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from './pages/HomePage.vue';
-import Login from './pages/Login.vue';
-import Register from './pages/Register.vue';
+import Login from './pages/Auth/Login.vue';
+import Register from './pages/Auth/Register.vue';
 import Dish from './pages/Dish.vue';
 import Restaurant from './pages/Restaurant.vue';
 import URRestaurant from './pages/URRestaurant.vue';

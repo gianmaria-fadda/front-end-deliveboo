@@ -57,13 +57,6 @@ export default {
                     </router-link>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">
-                    <router-link :to="{ name:'new-dish' }" class="nav-link">
-                      Aggiungi nuovo piatto
-                    </router-link>
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
