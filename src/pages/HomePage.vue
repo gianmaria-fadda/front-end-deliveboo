@@ -17,6 +17,17 @@ export default {
       try {
         const res = await axios.get("http://127.0.0.1:8000/api/public/restaurants");
         this.restaurants = res.data; // Salva i dati nella proprietà restaurants
+        console.log(res.data)
+      } catch (error) {
+        console.error("Errore nel recupero dei ristoranti:", error);
+        alert("Impossibile recuperare i dati dei ristoranti.");
+      }
+    },
+    async getCategories() {
+      try {
+        const res = await axios.get("http://127.0.0.1:8000/api/public/restaurants-categories");
+        this.categories = res.data; // Salva i dati nella proprietà restaurants
+        console.log(res.data)
       } catch (error) {
         console.error("Errore nel recupero dei ristoranti:", error);
         alert("Impossibile recuperare i dati dei ristoranti.");
@@ -60,6 +71,12 @@ export default {
             <h5 class="card-title">{{ restaurant.name}}</h5>
           </router-link>
           <p class="card-text">{{ restaurant.description}}</p>
+          <ul>
+            Categorie:
+            <li v-for="category in restaurant.categories" :key="category.id">
+              {{ category.name }}
+            </li>
+          </ul>
         </div>
       </div>
 
