@@ -16,7 +16,8 @@ export default {
         image: null,
         categories: []
       },
-      arrayCategories: []
+      arrayCategories: [],
+      passwordError: false
     };
   },
   methods: {
@@ -25,6 +26,16 @@ export default {
       const file = event.target.files[0];
       if (file) {
         this.form.image = file;
+      }
+    },
+
+    checkedPassword() {
+      if (this.form.password != this.form.password_confirmation) {
+        this.passwordError = true
+        return;
+      } 
+      else {
+        this.passwordError = false
       }
     },
 
@@ -40,6 +51,7 @@ export default {
       formData.append('address', this.form.address);
       formData.append('description', this.form.description);
       formData.append('piva', this.form.piva);
+      formData.append('categories', this.form.categories);
 
       // Se c'è un'immagine, aggiungila al formData
       if (this.form.image) {
@@ -47,13 +59,14 @@ export default {
       }
 
       // Esegui la richiesta POST per registrare l'utente e il ristorante
-      axios.post('http://127.0.0.1:8000/api/register', formData)
+      axios.post('http://127.0.0.1:8000/api/auth/register', formData)
         .then(response => {
           console.log('Registrazione completata:', response.data);
           // Puoi reindirizzare l'utente o fare altre azioni
         })
         .catch(error => {
-          console.error('Errore durante la registrazione:', error);
+          console.error('Errore durante la registrazione:', error.response.data);
+          console.error('status: ', error.response.status);
         });
     },
   },
@@ -74,7 +87,7 @@ export default {
       </div>
       <div class="card-body">
         <!-- aggiungere i campi contrassegnati bla bla bla -->
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm" method="post">
 
           <!-- Nome attività -->
           <div class="mb-3">
@@ -95,16 +108,35 @@ export default {
           <!-- Password -->
           <div class="row g-3 align-items-center mb-4">
             <div class="col-auto">
-              <label for="inputPassword6" class="col-form-label">Scegli password
+              <label for="inputPassword6" class="col-form-label">Scegli Password
                 <span class="red_required">*</span>
               </label>
-              <input type="password" v-model="form.password" id="inputPassword6" placeholder="Inserisci qui la tua Password..." class="form-control" min="8">
+              <input type="password" v-model="form.password" id="inputPassword6" @input="checkedPassword" placeholder="Inserisci qui la tua Password..." class="form-control" min="8">
             </div>
             <div class="col-auto margin-top-password">
               <span id="passwordHelpInline" class="form-text">
                 La password deve essere almeno di 8 caratteri.
               </span>
             </div>
+          </div>
+
+          <!-- Conferma-Password -->
+          <div class="row g-3 align-items-center mb-4">
+            <div class="col-auto">
+              <label for="inputPassword6" class="col-form-label">Conferma Password
+                <span class="red_required">*</span>
+              </label>
+              <input type="password" v-model="form.password_confirmation" id="inputPassword6Confirmation" @input="checkedPassword" placeholder="Inserisci qui la tua Password..." class="form-control" min="8">
+            </div>
+            <div class="col-auto margin-top-password">
+              <span id="passwordHelpInline" class="form-text">
+                La password deve essere almeno di 8 caratteri.
+              </span>
+            </div>
+          </div>
+
+          <div v-if="passwordError" class="error-message">
+            errore: le password non coincidono!!!
           </div>
 
           <!-- Nome attività -->
@@ -132,13 +164,21 @@ export default {
           </div>
 
           <!-- Tipologie -->
-
-            <!-- da fare con il v for -->
-            <input type="checkbox" class="btn-check" id="btn-check-4" checked autocomplete="off">
-            <label class="btn" for="btn-check-4">Italiano</label>
-
-            <input type="checkbox" class="btn-check" id="btn-check-5" autocomplete="off" required>
-            <label class="btn" for="btn-check-5">Altro</label>
+          <div>
+            <label for="categories" class="form-label">Seleziona le categorie del tuo ristorante
+              <span class="red_required">*</span>
+            </label>
+            <div v-for="category in arrayCategories" :key="category.id" class="form-check me-3 mb-2">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                :id="category.id"
+                :value="category.id"
+                v-model="form.categories"
+              />
+              <label class="form-check-label" :for="category.id">{{ category.name }}</label>
+            </div>
+          </div>
 
 
           <!-- Immagine -->
