@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import Dish from './Dish.vue';
 
 export default {
   data() {
@@ -65,16 +66,7 @@ export default {
                   </p>    
                 </div>
 
-                <!-- Bottone per aggiungere il piatto al carrello -->
-                <button type="button" class="btn btn-dark">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-
-                <!-- Da aggiungere al click metti la quantità -->
-                
-              </div>
-
-              <!-- Card con bottone per aggiungere al carrello i prodotti -->
+                <!-- Card con bottone per aggiungere al carrello i prodotti -->
               <div class="card mb-3 me-4" style="width: 18rem;">
                 <div class="card-body">
                   <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
@@ -140,11 +132,15 @@ export default {
    
                 
               </div>
+
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+
   </main>
 </template>
 
