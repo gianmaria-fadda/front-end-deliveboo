@@ -221,6 +221,10 @@ export default {
 }
 
 .big_container {
-  padding: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
+
 </style>

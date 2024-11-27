@@ -22,6 +22,7 @@ export default {
               <div class="logo_name">Deliveboo</div>
             </div>
           </RouterLink>
+          
 
           
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -30,7 +31,7 @@ export default {
 
           <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Dashboard</h5>
+              <h5 class="offcanvas-title title_offcanvas" id="offcanvasNavbarLabel">Dashboard</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
 
@@ -71,8 +72,6 @@ export default {
 
 header {
   background-color: $mainColor;
-
-
   
   .nav-margin {
     margin-bottom: 80px;
@@ -93,12 +92,23 @@ header {
     color: white;
     text-decoration: none;
 
+    padding-top: 10px;
+    padding-left: 10px;
+
   }
 }
 
 .deliveboo_logo {
-  width: 70px;
+  width: 68px;
+  
 
+}
+
+.title_offcanvas {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2rem;
 }
 
 </style>
