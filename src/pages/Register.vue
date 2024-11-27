@@ -1,11 +1,69 @@
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      
-    }
+      form: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        restaurant_name: '',
+        address: '',
+        description: '',
+        piva: '',
+        image: null,
+        categories: []
+      },
+      arrayCategories: []
+    };
+  },
+  methods: {
+    // Funzione per gestire il caricamento dell'immagine
+    handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.form.image = file;
+      }
+    },
+
+    // Funzione per inviare i dati al backend
+    submitForm() {
+      // Crea un oggetto FormData per inviare i dati (inclusi file)
+      const formData = new FormData();
+      formData.append('name', this.form.name);
+      formData.append('email', this.form.email);
+      formData.append('password', this.form.password);
+      formData.append('password_confirmation', this.form.password_confirmation);
+      formData.append('restaurant_name', this.form.restaurant_name);
+      formData.append('address', this.form.address);
+      formData.append('description', this.form.description);
+      formData.append('piva', this.form.piva);
+
+      // Se c'è un'immagine, aggiungila al formData
+      if (this.form.image) {
+        formData.append('image', this.form.image);
+      }
+
+      // Esegui la richiesta POST per registrare l'utente e il ristorante
+      axios.post('http://127.0.0.1:8000/api/register', formData)
+        .then(response => {
+          console.log('Registrazione completata:', response.data);
+          // Puoi reindirizzare l'utente o fare altre azioni
+        })
+        .catch(error => {
+          console.error('Errore durante la registrazione:', error);
+        });
+    },
+  },
+  created() {
+    axios.get('http://127.0.0.1:8000/api/public/restaurant-categories')
+        .then(res => {
+          console.log(this.arrayCategories = res.data);
+        });
   }
-}
+};
 </script>
 
 <template>
