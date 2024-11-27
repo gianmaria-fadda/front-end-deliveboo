@@ -5,31 +5,52 @@ import Restaurant from './Restaurant.vue';
 export default {
   data() {
     return { 
-      restaurants: []
+      restaurants: [],
+      searchQuery: "" // Valore della barra di ricerca
     }
   },
   mounted() {
     this.getRestaurants();
   },
   methods: {
-    getRestaurants() {
-    axios
-        .get('http://127.0.0.1:8000/api/public/restaurants')
-        .then((res) => {
-            console.log(res.data); 
-            this.restaurants= res.data;
-        });
-    }
-  }
+    async getRestaurants() {
+      try {
+        const res = await axios.get("http://127.0.0.1:8000/api/public/restaurants");
+        this.restaurants = res.data; // Salva i dati nella proprietà restaurants
+      } catch (error) {
+        console.error("Errore nel recupero dei ristoranti:", error);
+        alert("Impossibile recuperare i dati dei ristoranti.");
+      }
+    },
+  },
+    computed: {
+    // Filtra i ristoranti in base al nome inserito nella barra di ricerca
+    filteredRestaurants() {
+  return this.restaurants.filter((restaurant) => {
+    const normalizedName = restaurant.name.toLowerCase().replace(/\s+/g, ""); // Rimuove tutti gli spazi
+    const normalizedQuery = this.searchQuery.toLowerCase().replace(/\s+/g, ""); // Rimuove tutti gli spazi
+    return normalizedName.includes(normalizedQuery);
+  });
 }
+}
+}
+
 </script>
 
 <template>
   <div>
     <div class="container d-flex justify-content-around flex-wrap">
-      
+      <!-- Barra di ricerca -->
+    <div class="container my-4">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Cerca un ristorante..."
+        v-model="searchQuery"
+      />
+    </div>
       <!-- Cards ristoranti -->
-      <div class="card mb-3" style="width: 18rem;" v-for="(restaurant,i) in restaurants" key="restaurant.id">
+      <div class="card mb-3" style="width: 18rem;" v-for="(restaurant) in filteredRestaurants" :key="restaurant.id">
         <router-link :to="{ name:'restaurant' , params: { id: restaurant.id }}">
           <img :src="restaurant.image" class="card-img-top" alt="...">
         </router-link>
