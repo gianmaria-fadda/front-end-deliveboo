@@ -5,6 +5,7 @@ import Login from './pages/Login.vue';
 import Register from './pages/Register.vue';
 import Dish from './pages/Dish.vue';
 import Restaurant from './pages/Restaurant.vue';
+import URRestaurant from './pages/URRestaurant.vue';
 
 
 
@@ -35,6 +36,11 @@ const router = createRouter({
             path: '/restaurant/:id',
             name: 'restaurant',
             component: Restaurant
+        },
+        {
+            path: '/restaurant/:id',
+            name: 'ur-restaurant',
+            component: URRestaurant
         }
           
     ]
