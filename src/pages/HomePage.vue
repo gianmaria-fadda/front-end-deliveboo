@@ -68,12 +68,17 @@ export default {
         <!-- Barra di ricerca -->
         <div class="row my-3">
           <div class="col col-md-8 col-lg-6 mx-auto">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Cerca un ristorante..."
-              v-model="searchQuery"
-            />
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Cerca un ristorante..."
+                v-model="searchQuery"
+              />
+              <span class="input-group-text">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </span>
+            </div>
           </div>
 
           <!-- Checkbox delle categorie -->
