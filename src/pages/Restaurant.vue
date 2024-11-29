@@ -106,7 +106,14 @@ export default {
               </div>
               <div class="offcanvas-body">
                 <div v-for="item in cart" :key="item.id">
-                  <p>{{ item.name }} - Quantità: {{ item.quantity }} - Totale: €{{ (item.quantity * item.price).toFixed(2) }}</p>
+                  <p>
+                    <ul>
+                      <li>
+                        {{ item.name }} <br> - Quantità: {{ item.quantity }} <br> = Totale: €{{ (item.quantity * item.price).toFixed(2) }}
+                      </li>
+                    </ul>
+                    
+                  </p>
                 </div>
 
                 <div>

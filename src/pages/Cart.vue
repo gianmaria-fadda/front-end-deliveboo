@@ -7,15 +7,19 @@ import axios from 'axios';
 <template>
   <main>
     <!-- Carrello Offcanvas -->
-
-    carrelloooo
+    <h3 class="my-5">
+      Nessun Prodotto aggiunto al Carrello
+    </h3>
+    
   </main>
 </template>
 
 <style lang="scss" scoped>
 @use '../assets/scss/partials/variables' as *;
 
-
+main {
+  height: 50vh;
+}
 .cart {
   font-family: "Chewy", system-ui;
   font-weight: 400;
