@@ -110,7 +110,7 @@ export default {
                 </div>
 
                 <div>
-                  Il totale del tuo ordine è {{ CartTotal() }}
+                  Il totale del tuo ordine è <span>&#8364;</span>{{ CartTotal() }}
                 </div>
 
                 <router-link :to="{ name:'cart' }" >

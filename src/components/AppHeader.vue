@@ -45,17 +45,13 @@ export default {
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">
-                    <router-link :to="{ name:'login' }" class="nav-link">
-                      Login
-                    </router-link>
+                  <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/login">
+                    Login
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">
-                    <router-link :to="{ name:'register' }" class="nav-link">
-                      Registrati
-                    </router-link>
+                  <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/register">
+                    Register
                   </a>
                 </li>
               </ul>
