@@ -56,9 +56,8 @@ export default {
       
       <!-- Ristorante -->
       <div class="card mb-3">
-        <a href="">
-          <img :src="restaurant.image" class="card-img-top" alt="...">
-        </a>
+       <img :src="`http://127.0.0.1:8000/storage/${restaurant.image}`" class="card-img-top" alt="...">
+
 
         <div class="card-body">
           <h1 class="card-title">{{ restaurant.name}}</h1>
@@ -78,6 +77,7 @@ export default {
             <div class="dishes_cards_container d-flex flex-wrap justify-content-even">
 
               <div class="card mb-3 me-4" style="width: 18rem;" v-for="(product,i) in restaurant.products" key="product.id">
+                <img :src="`http://127.0.0.1:8000/storage/${product.image}`" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">{{ product.name}}</h5>
                   <div>
