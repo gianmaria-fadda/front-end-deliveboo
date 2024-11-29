@@ -6,7 +6,7 @@ export default {
   data() {
     return { 
       restaurant: {},
-      cart: []
+      cart: JSON.parse(localStorage.getItem('cart')) || []
     }
   },
   // Variabile per salvare l'id
@@ -24,10 +24,24 @@ export default {
           this.restaurant= res.data;
       });
     },
-    AddToCart(product) {
-      const existingProduct = this.cart.find(cartItem => cartItem.id === product.id);
-      // "Trova l'elemento in cart (chiamato cartItem) che ha lo stesso id del prodotto che sto cercando di aggiungere (product.id)."
-      
+    AddToCart(product) {// Se il carrello è vuoto, aggiungi l'ID del ristorante
+      if (this.cart.length === 0) {
+        this.cart.push({
+          restaurantId: this.restaurant.id,  // Memorizza l'ID del ristorante
+          items: []  // Lista degli articoli
+        });
+      }
+
+      // Controlla che l'ID del ristorante del prodotto sia lo stesso di quello nel carrello
+      const cartRestaurantId = this.cart[0].restaurantId;
+
+      if (this.restaurant.id !== cartRestaurantId) {
+        alert('Puoi aggiungere solo prodotti dallo stesso ristorante!');
+        return;  // Impedisce l'aggiunta se l'ID ristorante non corrisponde
+      }
+
+      // Trova il prodotto nel carrello
+      const existingProduct = this.cart[0].items.find(cartItem => cartItem.id === product.id);
       if (existingProduct) {
       // Se esiste, aumenta la quantità
       existingProduct.quantity++;
@@ -40,11 +54,15 @@ export default {
           quantity: 1
       })
       };
+      this.updateLocalStorage();
     },
   CartTotal() {
     return this.cart.reduce((total, item) => {
       return total + item.price * item.quantity; // Moltiplica il prezzo per la quantità di ciascun articolo e somma
     }, 0);
+  },
+  updateLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(this.cart));
   }
   }
 }
