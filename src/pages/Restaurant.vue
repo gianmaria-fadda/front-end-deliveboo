@@ -76,25 +76,29 @@ export default {
             <!-- Container delle cards dei piatti -->
             <div class="dishes_cards_container d-flex flex-wrap justify-content-even">
 
-              <div class="card mb-3 me-4" style="width: 18rem;" v-for="(product,i) in restaurant.products" key="product.id">
-                <img :src="`http://127.0.0.1:8000/storage/${product.image}`" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">{{ product.name}}</h5>
-                  <div>
-                    {{ product.price }}€
+              <div v-for="(product,i) in restaurant.products" key="product.id">
+                <div v-show="product.visible !== 0">
+                  <div class="card mb-3 me-4" style="width: 18rem;" >
+                    <img :src="`http://127.0.0.1:8000/storage/${product.image}`" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ product.name}}</h5>
+                      <div>
+                        {{ product.price }}€
+                      </div>
+                      <p class="card-text">
+                        <span class="fw-semibold text-decoration-underline">Ingredienti:</span>
+                        {{ product.ingredients}}
+                      </p>    
+                    </div>
+    
+                    <!-- Bottone per aggiungere il piatto al carrello -->
+                    <button @click="AddToCart(product)" class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                      <i class="fa-solid fa-plus"></i>
+                    </button>
                   </div>
-                  <p class="card-text">
-                    <span class="fw-semibold text-decoration-underline">Ingredienti:</span>
-                    {{ product.ingredients}}
-                  </p>    
+                  
+                  
                 </div>
-
-                <!-- Bottone per aggiungere il piatto al carrello -->
-                <button @click="AddToCart(product)" class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-                
-                
               </div>
 
               <!-- Carrello Offcanvas -->
