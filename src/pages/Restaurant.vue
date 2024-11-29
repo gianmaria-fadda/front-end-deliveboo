@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import { RouterLink, RouterView } from 'vue-router';
-import { store } from '../store';
 
 export default {
   data() {
@@ -13,13 +12,35 @@ export default {
   // Variabile per salvare l'id
   mounted() {
     const restaurantId = this.$route.params.id; 
-    return store.getSingleRestaurant(restaurantId);
+    this.getSingleRestaurant(restaurantId);
   },
   methods: {
-    return store.getSingleRestaurant(id);
-
-    return store.AddToCart(product);
-  },
+    getSingleRestaurant(id) {
+      axios
+      // Metto il parametro ID nella rotta
+      .get(`http://127.0.0.1:8000/api/public/restaurant/${id}`) 
+      .then((res) => {
+          console.log(res.data); 
+          this.restaurant= res.data;
+      });
+    },
+    AddToCart(product) {
+      const existingProduct = this.cart.find(cartItem => cartItem.id === product.id);
+      // "Trova l'elemento in cart (chiamato cartItem) che ha lo stesso id del prodotto che sto cercando di aggiungere (product.id)."
+      
+      if (existingProduct) {
+      // Se esiste, aumenta la quantità
+      existingProduct.quantity++;
+      } else {
+      // Altrimenti, aggiungi il prodotto con quantità 1
+      this.cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          quantity: 1
+      })
+      };
+    },
   CartTotal() {
     return this.cart.reduce((total, item) => {
       return total + item.price * item.quantity; // Moltiplica il prezzo per la quantità di ciascun articolo e somma
@@ -27,8 +48,6 @@ export default {
   }
   }
 }
-
-
 </script>
 
 <template>
