@@ -1,34 +1,29 @@
 <script>
 import axios from 'axios';
-import { RouterLink, RouterView } from 'vue-router';
-import { store } from '../store';
 
 export default {
   data() {
     return { 
-      restaurant: {},
-      cart: []
+      restaurant: {}
     }
   },
   // Variabile per salvare l'id
   mounted() {
     const restaurantId = this.$route.params.id; 
-    return store.getSingleRestaurant(restaurantId);
+    this.getSingleRestaurant(restaurantId);
   },
   methods: {
-    return store.getSingleRestaurant(id);
-
-    return store.AddToCart(product);
-  },
-  CartTotal() {
-    return this.cart.reduce((total, item) => {
-      return total + item.price * item.quantity; // Moltiplica il prezzo per la quantità di ciascun articolo e somma
-    }, 0);
-  }
+    getSingleRestaurant(id) {
+    axios
+    // Metto il parametro ID nella rotta
+    .get(`http://127.0.0.1:8000/api/public/restaurant/${id}`) 
+    .then((res) => {
+        console.log(res.data); 
+        this.restaurant= res.data;
+    });
+    }
   }
 }
-
-
 </script>
 
 <template>
@@ -71,37 +66,80 @@ export default {
                 </div>
 
                 <!-- Bottone per aggiungere il piatto al carrello -->
-                <button @click="AddToCart(product)" class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                <button type="button" class="btn btn-dark">
                   <i class="fa-solid fa-plus"></i>
                 </button>
-                
+
+                <!-- Da aggiungere al click metti la quantità -->
                 
               </div>
 
-              <!-- Carrello Offcanvas -->
-
-            <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title cart" id="offcanvasWithBothOptionsLabel">Carrello</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              <!-- Card con bottone per aggiungere al carrello i prodotti -->
+              <div class="card mb-3 me-4" style="width: 18rem;">
+                <div class="card-body">
+                  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                    <i class="fa-solid fa-plus"></i>
+                  </button>
+                </div>
               </div>
-              <div class="offcanvas-body">
-                <div v-for="item in cart" :key="item.id">
-                  <p>{{ item.name }} - Quantità: {{ item.quantity }} - Totale: €{{ (item.quantity * item.price).toFixed(2) }}</p>
+
+              <!-- Off canvas a destra per aggiungere un piatto -->
+              <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+  
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasExampleLabel">Aggiungi un nuovo piatto</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
 
-                <div>
-                  Il totale del tuo ordine è {{ CartTotal() }}
+                <div class="offcanvas-body">
+                  <form action="">
+                    <!-- Nome piatto -->
+                    <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Scrivi il nome del piatto...">
+                    <datalist id="datalistOptions">
+
+                      <!-- ciclo -->
+                      <option value="Pizza">Pizza</option>
+                    </datalist>
+
+                    <!-- Ingredienti/descrizione -->
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Scrivi gli ingredienti/la descrizione.
+                            <span class="red_required">*</span>
+                        </label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+
+                    <!-- Prezzo -->
+                    <label for="AddPrice" class="form-label">Scegli il Prezzo
+                        <span class="red_required">*</span>
+                    </label>
+                    <input class="form-control" type="text" id="AddPrice" min="0.10" required>
+
+                    <!-- Visiibilità -->
+                    <label for="exampleRadios1" class="form-label">Visibile sul menù
+                        <span class="red_required">*</span>
+                    </label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Sì
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                        <label class="form-check-label" for="exampleRadios2">
+                            No
+                        </label>
+                    </div>
+
+                    <!-- Bottone -->
+                    <button type="submit" class="btn btn-primary">Aggiungi</button>
+
+                  </form> 
                 </div>
-
-                <router-link :to="{ name:'cart' }" >
-                  Vedi carrello
-                </router-link>
+   
+                
               </div>
-            </div>
-
-
-
             </div>
           </div>
         </div>
@@ -150,12 +188,6 @@ main {
       opacity: 0.8;
     }
   }
-}
-
-.cart {
-  font-family: "Chewy", system-ui;
-  font-weight: 400;
-  font-style: normal;
 }
 
 </style>
