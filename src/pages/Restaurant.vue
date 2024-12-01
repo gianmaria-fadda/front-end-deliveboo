@@ -24,7 +24,9 @@ export default {
           this.restaurant= res.data;
       });
     },
-    AddToCart(product) {// Se il carrello è vuoto, aggiungi l'ID del ristorante
+    AddToCart(product) {
+      
+      // Se il carrello è vuoto, aggiungi l'ID del ristorante
       if (this.cart.length === 0) {
         this.cart.push({
           restaurantId: this.restaurant.id,  // Memorizza l'ID del ristorante
@@ -32,7 +34,7 @@ export default {
         });
       }
 
-      // Controlla che l'ID del ristorante del prodotto sia lo stesso di quello nel carrello
+      // Controlla che l'ID del ristorante del prodotto sia lo stesso di quello nel carrello(POSSO ORDINARE DA UN RISTORANTE ALLA VOLTA)
       const cartRestaurantId = this.cart[0].restaurantId;
 
       if (this.restaurant.id !== cartRestaurantId) {
@@ -42,29 +44,33 @@ export default {
 
       // Trova il prodotto nel carrello
       const existingProduct = this.cart[0].items.find(cartItem => cartItem.id === product.id);
+
       if (existingProduct) {
       // Se esiste, aumenta la quantità
       existingProduct.quantity++;
       } else {
       // Altrimenti, aggiungi il prodotto con quantità 1
-      this.cart.push({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          quantity: 1
-      })
-      };
+      this.cart[0].items.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1
+      });
+      }
       this.updateLocalStorage();
     },
-  CartTotal() {
-    return this.cart.reduce((total, item) => {
-      return total + item.price * item.quantity; // Moltiplica il prezzo per la quantità di ciascun articolo e somma
-    }, 0);
-  },
-  updateLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(this.cart));
-  }
-  }
+    CartTotal() {
+      if (this.cart.length === 0 || !this.cart[0].items || this.cart[0].items.length === 0) {
+        return 0; // Restituisce 0 se il carrello è vuoto
+      }
+      return this.cart[0].items.reduce((total, item) => {
+        return total + item.price * item.quantity; // Moltiplica il prezzo per la quantità di ciascun articolo e somma
+      }, 0);
+    },
+    updateLocalStorage() {
+      localStorage.setItem('cart', JSON.stringify(this.cart));
+    }
+    }
 }
 </script>
 
@@ -94,7 +100,7 @@ export default {
             <!-- Container delle cards dei piatti -->
             <div class="dishes_cards_container d-flex flex-wrap justify-content-even">
 
-              <div v-for="(product,i) in restaurant.products" key="product.id">
+              <div v-for="(product,i) in restaurant.products" :key="product.id">
                 <div v-show="product.visible !== 0">
                   <div class="card mb-3 me-4" style="width: 18rem;" >
                     <img :src="`http://127.0.0.1:8000/storage/${product.image}`" class="card-img-top" alt="...">
@@ -127,7 +133,7 @@ export default {
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body">
-                <div v-for="item in cart" :key="item.id">
+                <div v-for="item in cart[0].items" :key="item.id">
                   <p>
                     <ul>
                       <li>

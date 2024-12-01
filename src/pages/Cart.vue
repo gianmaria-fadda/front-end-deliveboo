@@ -9,6 +9,7 @@ export default {
   computed: {
     cartTotal() {
       return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
+      console.log(this.cart);
     }
   },
   methods: {
@@ -44,10 +45,29 @@ export default {
     <!-- Visualizza i prodotti nel carrello -->
     <div v-else>
       <div v-for="item in cart" :key="item.id" class="cart-item">
-        <p>{{ item.name }} - Quantità: {{ item.quantity }} - €{{ item.price * item.quantity }}</p>
-        <button class="rounded-pill p-1" @click="removeFromCart(item.id)">Rimuovi</button>
+        <div v-if="item.id== null">
+          <div>
+            {{ item.name }} quantità: {{ item.quantity }}
+          </div>
+          <button class="rounded-pill p-1" @click="removeFromCart(item.id)">Rimuovi</button>
+        </div>
+        <div v-else-if="cart.includes(item.id)">
+          <div>
+            {{ item.name }} quantità: {{ item.quantity++ }}
+          </div>
+          <button class="rounded-pill p-1" @click="removeFromCart(item.id)">Rimuovi</button>
+        </div>
       </div>
 
+      <!-- se l item non ce quindi item.id è nullo allora aggiungi sllora lo crei-->
+       <!-- altrimenti se item.id !null allora aggiungi solo qusntità -->
+        <!-- if (this.cart.length === 0) {
+        this.cart.push({
+          restaurantId: this.restaurant.id,  //  Memorizza l'ID del ristorante
+          items: []  // Lista degli articoli
+        }); 
+          <button class="rounded-pill p-1" @click="removeFromCart(item.id)">Rimuovi</button>
+      } -->
       <!-- Totale del carrello -->
       <div>
         <h3>Totale: €{{ cartTotal }}</h3>
