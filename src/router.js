@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from './pages/HomePage.vue';
-import Dish from './pages/Dish.vue';
 import Restaurant from './pages/Restaurant.vue';
 import Cart from './pages/Cart.vue';
+import Checkout from './pages/Checkout.vue';
 
 
 
@@ -17,11 +17,6 @@ const router = createRouter({
             component: HomePage
         },
         {
-            path: '/',
-            name: 'new-dish',
-            component: Dish
-        },
-        {
             path: '/restaurant/:id',
             name: 'restaurant',
             component: Restaurant
@@ -30,6 +25,11 @@ const router = createRouter({
             path: '/cart',
             name: 'cart',
             component: Cart
+        },
+        {
+            path: '/checkout',
+            name: 'checkout',
+            component: Checkout
         }
           
     ]

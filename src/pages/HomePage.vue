@@ -110,9 +110,12 @@ export default {
         <div class="row">
           <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" v-for="(restaurant) in filteredRestaurants" :key="restaurant.id">
             <div class="card h-100">
-              <router-link :to="{ name:'restaurant' , params: { id: restaurant.id }}">
-                <img :src="restaurant.image" class="card-img-top" alt="...">
-              </router-link>
+              <img
+                :src="`http://127.0.0.1:8000/storage/${restaurant.image}`"
+                class="card-img-top"
+                :alt="restaurant.name"
+              />
+
               <div class="card-body">
                 <router-link :to="{ name:'restaurant', params: { id: restaurant.id } }">
                   <h5 class="card-title">{{ restaurant.name}}</h5>

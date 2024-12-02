@@ -73,8 +73,12 @@ export default {
       <div class="cart-total">
         <h3>Totale Ordine: €{{ CartTotal().toFixed(2) }}</h3>
       </div>
-    </div>
-
+    
+    <!-- Pulsante per navigare al checkout -->
+    <router-link to="/checkout" class="btn btn-primary mt-3">
+      Procedi al Checkout
+    </router-link>
+  </div>
     <!-- Messaggio se il carrello è vuoto -->
     <div v-else>
       <p>Il carrello è vuoto. Aggiungi alcuni prodotti!</p>
