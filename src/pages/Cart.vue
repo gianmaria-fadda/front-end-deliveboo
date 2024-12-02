@@ -1,96 +1,144 @@
 <script>
-import axios from 'axios';
 export default {
   data() {
     return {
-      cart: JSON.parse(localStorage.getItem('cart')) || [] // Recupera il carrello dal localStorage (se esiste)
+      cart: [], // Carrello locale
     };
   },
-  computed: {
-    cartTotal() {
-      return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
-      console.log(this.cart);
-    }
+  mounted() {
+    this.loadCart(); // Carica i dati del carrello dal localStorage all'avvio
   },
   methods: {
-    removeFromCart(productId) {
-      this.cart = this.cart.filter(item => item.id !== productId);
-      this.updateLocalStorage(); // Aggiorna localStorage
+    loadCart() {
+      const savedCart = localStorage.getItem("cart");
+      if (savedCart) {
+        this.cart = JSON.parse(savedCart); // Inizializza il carrello
+        console.log("Carrello caricato:", this.cart);
+      }
+    },
+    increaseQuantity(item) {
+      item.quantity++;
+      this.updateLocalStorage();
+    },
+    decreaseQuantity(item) {
+      if (item.quantity > 1) {
+        item.quantity--;
+      } else {
+        this.removeItem(item);
+      }
+      this.updateLocalStorage();
+    },
+    removeItem(item) {
+      console.log("Rimuovi elemento:", item);
+      this.cart[0].items = this.cart[0].items.filter(
+        (cartItem) => cartItem.id !== item.id
+      );
+      if (this.cart[0].items.length === 0) {
+        this.cart = []; // Svuota il carrello se non ci sono più elementi
+      }
+      this.updateLocalStorage();
     },
     updateLocalStorage() {
-      localStorage.setItem('cart', JSON.stringify(this.cart)); // Salva il carrello nel localStorage
-    }
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+      console.log("Carrello aggiornato:", this.cart);
+    },
+    CartTotal() {
+      if (this.cart.length === 0 || !this.cart[0]?.items?.length) {
+        return 0; // Restituisce 0 se il carrello è vuoto
+      }
+      return this.cart[0].items.reduce((total, item) => {
+        return total + item.price * item.quantity;
+      }, 0);
+    },
   },
-  watch: {
-    cart: {
-      handler() {
-        this.updateLocalStorage(); // Ogni volta che il carrello cambia, aggiorna localStorage
-      },
-      deep: true
-    }
-  }
 };
 </script>
 
+
 <template>
-  <main>
-    <div>
+  <div class="container">
     <h1>Il tuo Carrello</h1>
 
-    <!-- Se il carrello è vuoto, mostra un messaggio -->
-    <div v-if="cart.length === 0">
+    <!-- Contenuto del carrello -->
+    <div v-if="cart.length > 0 && cart[0]?.items?.length">
+      <div v-for="item in cart[0].items" :key="item.id" class="cart-item">
+        <p>
+          {{ item.name }} - Quantità: {{ item.quantity }} - Totale:
+          €{{ (item.quantity * item.price).toFixed(2) }}
+        </p>
+        <button @click="increaseQuantity(item)" class="btn btn-success">+</button>
+        <button @click="decreaseQuantity(item)" class="btn btn-warning">-</button>
+        <button @click="removeItem(item)" class="btn btn-danger">Rimuovi</button>
+      </div>
+      <div class="cart-total">
+        <h3>Totale Ordine: €{{ CartTotal().toFixed(2) }}</h3>
+      </div>
+    </div>
+
+    <!-- Messaggio se il carrello è vuoto -->
+    <div v-else>
       <p>Il carrello è vuoto. Aggiungi alcuni prodotti!</p>
     </div>
-
-    <!-- Visualizza i prodotti nel carrello -->
-    <div v-else>
-      <div v-for="item in cart" :key="item.id" class="cart-item">
-        <div v-if="item.id== null">
-          <div>
-            {{ item.name }} quantità: {{ item.quantity }}
-          </div>
-          <button class="rounded-pill p-1" @click="removeFromCart(item.id)">Rimuovi</button>
-        </div>
-        <div v-else-if="cart.includes(item.id)">
-          <div>
-            {{ item.name }} quantità: {{ item.quantity++ }}
-          </div>
-          <button class="rounded-pill p-1" @click="removeFromCart(item.id)">Rimuovi</button>
-        </div>
-      </div>
-
-      <!-- se l item non ce quindi item.id è nullo allora aggiungi sllora lo crei-->
-       <!-- altrimenti se item.id !null allora aggiungi solo qusntità -->
-        <!-- if (this.cart.length === 0) {
-        this.cart.push({
-          restaurantId: this.restaurant.id,  //  Memorizza l'ID del ristorante
-          items: []  // Lista degli articoli
-        }); 
-          <button class="rounded-pill p-1" @click="removeFromCart(item.id)">Rimuovi</button>
-      } -->
-      <!-- Totale del carrello -->
-      <div>
-        <h3>Totale: €{{ cartTotal }}</h3>
-      </div>
-    </div>
   </div>
-  </main>
 </template>
 
-<style lang="scss" scoped>
-@use '../assets/scss/partials/variables' as *;
+<style scoped>
+.container {
+  padding: 20px;
+}
 
-main {
-  height: 50vh;
-}
-.cart {
-  font-family: "Chewy", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
 .cart-item {
-  border-bottom: 1px solid;
-  padding: 10px 0;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
+.btn {
+  margin: 5px;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-success:hover {
+  opacity: 0.8;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-warning:hover {
+  opacity: 0.8;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  opacity: 0.8;
+}
+
+.cart-total {
+  margin-top: 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
 </style>
