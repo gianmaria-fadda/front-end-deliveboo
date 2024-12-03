@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage.vue';
 import Restaurant from './pages/Restaurant.vue';
 import Cart from './pages/Cart.vue';
 import Checkout from './pages/Checkout.vue';
+import Orders from './pages/Orders.vue';
 
 
 
@@ -30,7 +31,12 @@ const router = createRouter({
             path: '/checkout',
             name: 'checkout',
             component: Checkout
-        }
+        },
+        {
+            path: '/orders',
+            name: 'orders',
+            component: Orders,
+          }
           
     ]
 });

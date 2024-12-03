@@ -52,41 +52,47 @@
             </li>
           </ul>
           <h3>Totale Pagato: €{{ order.price.toFixed(2) }}</h3>
-          <!--<p>Nonce di pagamento: {{ paymentNonce }}</p>-->
-          <button @click="closePopup">Chiudi</button>
+          <!--<p>Nonce di pagamento: {{ paymentNonce }}</p>
+          <a class="nav-link active" aria-current="page" href="#">
+                      <router-link to="/orders" class="nav-link">I Tuoi Ordini</router-link>
+                    </a>-->
+          <button  @click="closePopup">Chiudi</button>
         </div>
+        
       </div>
     </div>
   </template>
   
   <script>
+import axios from 'axios';
+
   export default {
     data() {
       return {
         order: {
-          customer: "", // Nome cliente
-          email: "", // Email cliente
-          phone: "", // Telefono cliente
-          address: "", // Indirizzo cliente
-          notes: "", // Note cliente
-          price: 0, // Prezzo totale (carrello)
+          customer: "",
+          email: "",
+          phone: "",
+          address: "",
+          notes: "",
+          price: 0,
         },
-        cartItems: [], // Lista dei prodotti nel carrello
-        cartTotal: 0, // Totale carrello
+        cartItems: [],
+        cartTotal: 0,
         dropinInstance: null,
         isProcessing: false,
-        showPopup: false, // Stato del popup
-        paymentNonce: "", // Nonce del pagamento
+        showPopup: false,
+        paymentNonce: "",
       };
     },
     mounted() {
       this.initializeDropin();
-      this.loadCart(); // Carica i dati del carrello
+      this.loadCart();
     },
     methods: {
       async initializeDropin() {
-        const authorizationToken = "sandbox_f252zhq7_hh4cpc39zq4rgjcg"; // Token statico dalla sandbox di Braintree
-  
+        const authorizationToken = "sandbox_f252zhq7_hh4cpc39zq4rgjcg";
+
         braintree.dropin.create(
           {
             authorization: authorizationToken,
@@ -102,14 +108,13 @@
         );
       },
       loadCart() {
-        const cart = JSON.parse(localStorage.getItem("cart")); // Ottieni il carrello dal localStorage
+        const cart = JSON.parse(localStorage.getItem("cart"));
         if (cart && cart[0]?.items?.length) {
-          this.cartItems = cart[0].items; // Salva gli articoli del carrello
+          this.cartItems = cart[0].items;
           this.cartTotal = this.cartItems.reduce((total, item) => {
             return total + item.price * item.quantity;
           }, 0);
-  
-          // Calcola il prezzo totale (solo carrello)
+
           this.order.price = this.cartTotal;
         }
       },
@@ -118,35 +123,83 @@
           alert("Errore: Drop-in UI non inizializzata!");
           return;
         }
-  
+
         this.isProcessing = true;
-  
-        // Assicurati che tutti i campi obbligatori siano compilati
+
         if (!this.order.customer || !this.order.email || !this.order.phone || !this.order.address) {
           alert("Compila tutti i campi obbligatori per procedere con il pagamento.");
           this.isProcessing = false;
           return;
         }
-  
+
         this.dropinInstance.requestPaymentMethod((err, payload) => {
           if (err) {
             console.error("Errore durante la richiesta del metodo di pagamento:", err);
             this.isProcessing = false;
             return;
           }
-  
-          // Simula il successo del pagamento
-          this.paymentNonce = payload.nonce; // Salva il nonce
-          this.showPopup = true; // Mostra il popup
+
+          this.paymentNonce = payload.nonce;
+
+          const storedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+          const newOrder = {
+            customer: this.order.customer,
+            email: this.order.email,
+            phone: this.order.phone,
+            address: this.order.address,
+            notes: this.order.notes,
+            items: this.cartItems,
+            totalPrice: this.order.price,
+          };
+          storedOrders.push(newOrder);
+          localStorage.setItem("orders", JSON.stringify(storedOrders));
+
+          this.showPopup = true;
           this.isProcessing = false;
         });
       },
-      closePopup() {
-        this.showPopup = false;
-      },
-    },
+      async closePopup() {
+  this.showPopup = false;
+
+  // Invia i dati al backend
+  const orderData = {
+    email: this.order.email,
+    phone: this.order.phone,
+    address: this.order.address,
+    notes: this.order.notes,
+    price: this.order.price,
+    customer: this.order.customer,
   };
-  </script>
+
+  try {
+    const response = await ("http://localhost:8000/api/public/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderData),
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      console.log("Ordine salvato nel database:", result.order);
+    } else {
+      console.error("Errore nel salvataggio dell'ordine:", result.error);
+    }
+  } catch (error) {
+    console.error("Errore durante l'invio dell'ordine:", error);
+  }
+
+  localStorage.removeItem("cart");
+  this.cartItems = [];
+  this.cartTotal = 0;
+  this.order.price = 0;
+
+  this.$router.push({ name: "orders" });
+}
+    }
+  }
+</script>
   
   <style scoped>
   #checkout {
@@ -207,4 +260,3 @@
     background-color: #0056b3;
   }
   </style>
-  

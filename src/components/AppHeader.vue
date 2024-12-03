@@ -48,6 +48,12 @@ export default {
                     </a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                      <router-link to="/orders" class="nav-link">I Tuoi Ordini</router-link>
+                    </a>
+                  </li>
+                  <hr>
+                  <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/login">
                       Login
                     </a>
