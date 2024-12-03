@@ -13,7 +13,8 @@ export default {
       const savedCart = localStorage.getItem("cart");
       if (savedCart) {
         this.cart = JSON.parse(savedCart); // Inizializza il carrello
-        console.log("Carrello caricato:", this.cart);
+        const restaurantId = this.cart[0]?.restaurantId; // Recupera l'ID del ristorante
+        console.log("ID del ristorante nel carrello:", restaurantId);
       }
     },
     increaseQuantity(item) {
@@ -86,7 +87,7 @@ export default {
             </div>
           
           <!-- Pulsante per navigare al checkout -->
-          <router-link to="/checkout" class="btn btn-dark mt-3">
+          <router-link to="/checkout/${cart[0]?.restaurantId}" class="btn btn-dark mt-3">
             Procedi al Checkout
           </router-link>
         </div>
