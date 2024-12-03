@@ -57,36 +57,52 @@ export default {
 
 <template>
   <div class="container">
-    <h1>Il tuo Carrello</h1>
+      <div class="card">
+        <div class="card-body">
+          
+          <!-- Titolo -->
+          <h1>Il tuo Carrello</h1>
 
-    <!-- Contenuto del carrello -->
-    <div v-if="cart.length > 0 && cart[0]?.items?.length">
-      <div v-for="item in cart[0].items" :key="item.id" class="cart-item">
-        <p>
-          {{ item.name }} - Quantità: {{ item.quantity }} - Totale:
-          €{{ (item.quantity * item.price).toFixed(2) }}
-        </p>
-        <button @click="increaseQuantity(item)" class="btn btn-success">+</button>
-        <button @click="decreaseQuantity(item)" class="btn btn-warning">-</button>
-        <button @click="removeItem(item)" class="btn btn-danger">Rimuovi</button>
-      </div>
-      <div class="cart-total">
-        <h3>Totale Ordine: €{{ CartTotal().toFixed(2) }}</h3>
+          <!-- Contenuto del carrello -->
+          <div v-if="cart.length > 0 && cart[0]?.items?.length">
+            <div v-for="item in cart[0].items" :key="item.id" class="cart-item">
+              <div>
+                <div>
+                  {{ item.name }}
+                  <span class="fw-semibold">
+                    {{ item.quantity }}<span>x</span>
+                  </span>
+                </div>
+                <div>
+                  {{ (item.quantity * item.price).toFixed(2) }}
+                </div>
+              </div>
+              <button @click="increaseQuantity(item)" class="btn btn-outline-success">+</button>
+              <button @click="decreaseQuantity(item)" class="btn btn-outline-warning">-</button>
+              <button @click="removeItem(item)" class="btn btn-outline-danger">Rimuovi</button>
+            </div>
+            <div class="cart-total">
+              <h3>Totale Ordine: €<span class="fw-semibold">{{ CartTotal().toFixed(2) }}</span></h3>
+            </div>
+          
+          <!-- Pulsante per navigare al checkout -->
+          <router-link to="/checkout" class="btn btn-dark mt-3">
+            Procedi al Checkout
+          </router-link>
+        </div>
+          <!-- Messaggio se il carrello è vuoto -->
+          <div v-else>
+            <p>Il carrello è vuoto. Aggiungi alcuni prodotti!</p>
+          </div>
+        </div>
       </div>
     
-    <!-- Pulsante per navigare al checkout -->
-    <router-link to="/checkout" class="btn btn-primary mt-3">
-      Procedi al Checkout
-    </router-link>
-  </div>
-    <!-- Messaggio se il carrello è vuoto -->
-    <div v-else>
-      <p>Il carrello è vuoto. Aggiungi alcuni prodotti!</p>
-    </div>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '../assets/scss/partials/variables' as *;
+
 .container {
   padding: 20px;
 }
@@ -145,4 +161,21 @@ export default {
   font-size: 1.2em;
   font-weight: bold;
 }
+
+h1 {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: #262626;
+}
+
+
+.btn-dark {
+    background-color: $mainColor;
+    border: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 </style>

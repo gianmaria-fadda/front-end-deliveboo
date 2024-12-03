@@ -16,12 +16,12 @@ export default {
       <nav class="navbar fixed-top" data-bs-theme="light">
         <div class="container-fluid mx-5 d-flex">
 
-          <RouterLink :to="{ name:'home' }">
-            <div class="d-flex">
+          <div class="d-flex">
+            <RouterLink :to="{ name:'home' }">
               <img src="../../public/img/logo-orange.png" alt="Deliveboo Logo" class="deliveboo_logo">
-              <div class="logo_name">Deliveboo</div>
-            </div>
-          </RouterLink>
+            </RouterLink>
+            <div class="logo_name">Deliveboo</div>
+          </div>
 
           <div class="d-flex align-items-center">
             <router-link :to="{ name:'cart' }"  class="me-5 fs-5 border border-white border-2 rounded-pill px-3 py-1 bg-light cart-color">
@@ -34,7 +34,7 @@ export default {
   
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
               <div class="offcanvas-header">
-                <h5 class="offcanvas-title title_offcanvas" id="offcanvasNavbarLabel">Dashboard</h5>
+                <h4 class="offcanvas-title title_offcanvas" id="offcanvasNavbarLabel">Dashboard</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
   
@@ -54,12 +54,17 @@ export default {
                   </li>
                   <hr>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/login">
+                    <h5>
+                      Sei un ristoratore?
+                    </h5>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/login">
                       Login
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/register">
+                    <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/register">
                       Register
                     </a>
                   </li>
@@ -84,8 +89,9 @@ header {
   }
 }
 
+// Bottone carrello
 .cart-color {
-  color: #EC732C;
+  color: $mainColor;
   cursor: pointer;
 
   &:hover {
@@ -93,6 +99,7 @@ header {
     transition: .5s ease;
   }
 }
+// 
 
 .navbar {
   height: 80px;
@@ -107,7 +114,6 @@ header {
     text-align: left;
     color: white;
     text-decoration: none;
-
     padding-top: 10px;
     padding-left: 10px;
 
@@ -116,10 +122,23 @@ header {
 
 .deliveboo_logo {
   width: 68px;
-  
-
 }
 
+// hamburger navbar button
+.navbar-toggler {
+  border-color: white;
+} 
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-toggler:focus, .navbar-toggler:active {
+  color: rgba($color: white, $alpha: 0.5);
+}
+// 
+
+// Offcanvas dashboard
 .title_offcanvas {
   font-family: "Chewy", system-ui;
   font-weight: 400;
@@ -127,4 +146,12 @@ header {
   font-size: 2rem;
 }
 
+
+h5 {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: underline;
+}
+// 
 </style>

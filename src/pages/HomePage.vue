@@ -121,9 +121,8 @@ export default {
                   <h5 class="card-title">{{ restaurant.name}}</h5>
                 </router-link>
                 <p class="card-text">{{ restaurant.description}}</p>
-                <ul>
-                  Categorie:
-                  <li v-for="category in restaurant.categories" :key="category.id">
+                <ul class="d-flex">
+                  <li v-for="category in restaurant.categories" :key="category.id" class="fst-italic pe-5 categories">
                     {{ category.name }}
                   </li>
                 </ul>
@@ -183,4 +182,11 @@ a {
   box-shadow: 0 0 0 0.25rem rgba($mainColor, 0.25); 
 }
 
+ul {
+  list-style: url('https://img.icons8.com/fluency-systems-filled/15/food-bar.png');
+}
+
+.categories {
+  font-size: small;
+}
 </style>

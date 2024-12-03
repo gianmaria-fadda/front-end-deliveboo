@@ -1,69 +1,5 @@
-<template>
-    <div id="checkout">
-      <h1>Checkout</h1>
   
-      <!-- Form Dati Cliente -->
-      <div class="form">
-        <label>Nome Cliente</label>
-        <input v-model="order.customer" type="text" placeholder="ES. Mario Rossi" required />
-  
-        <label>Email</label>
-        <input v-model="order.email" type="email" placeholder="ES. example@email.com" required />
-  
-        <label>Telefono</label>
-        <input v-model="order.phone" type="tel" placeholder="ES. 1234567890" required />
-  
-        <label>Indirizzo</label>
-        <textarea v-model="order.address" placeholder="ES. Via Roma 10, Milano" required></textarea>
-  
-        <label>Note (opzionale)</label>
-        <textarea v-model="order.notes" placeholder="ES. no le posate"></textarea>
-      </div>
-  
-      <!-- Riepilogo Ordine -->
-      <h3>Riepilogo Ordine</h3>
-      <ul>
-        <li v-for="item in cartItems" :key="item.id">
-          {{ item.name }} - Quantità: {{ item.quantity }} - Prezzo: €{{ (item.price * item.quantity).toFixed(2) }}
-        </li>
-      </ul>
-      <h3>Totale Ordine: €{{ order.price.toFixed(2) }}</h3>
-  
-      <!-- Drop-in UI -->
-      <div id="dropin-container"></div>
-      <button class="border border-0 p-2 bg-success text-light rounded-pill" @click="processPayment" :disabled="isProcessing">
-        <span v-if="isProcessing">Pagamento in corso...</span>
-        <span v-else>Conferma Ordine</span>
-      </button>
-  
-      <!-- Popup di conferma -->
-      <div v-if="showPopup" class="popup-overlay">
-        <div class="popup-content">
-          <h2>Ordine Confermato!</h2>
-          <p>Nome Cliente: {{ order.customer }}</p>
-          <p>Email: {{ order.email }}</p>
-          <p>Telefono: {{ order.phone }}</p>
-          <p>Indirizzo: {{ order.address }}</p>
-          <p>Note: {{ order.notes || 'Nessuna nota aggiunta' }}</p>
-          <h3>Dettagli Ordine</h3>
-          <ul>
-            <li v-for="item in cartItems" :key="item.id">
-              {{ item.name }} - Quantità: {{ item.quantity }} - Prezzo: €{{ (item.price * item.quantity).toFixed(2) }}
-            </li>
-          </ul>
-          <h3>Totale Pagato: €{{ order.price.toFixed(2) }}</h3>
-          <!--<p>Nonce di pagamento: {{ paymentNonce }}</p>
-          <a class="nav-link active" aria-current="page" href="#">
-                      <router-link to="/orders" class="nav-link">I Tuoi Ordini</router-link>
-                    </a>-->
-          <button @click="closePopup">Chiudi</button>
-        </div>
-        
-      </div>
-    </div>
-  </template>
-  
-  <script>
+<script>
 import axios from 'axios';
 
   export default {
@@ -200,10 +136,82 @@ import axios from 'axios';
     }
   }
 </script>
+
+<template>
+  <div id="checkout">
+    <div class="card">
+      <div class="card-body">
+        <h1>Checkout</h1>
+    
+        <!-- Form Dati Cliente -->
+        <div class="form">
+          <label>Nome Cliente</label>
+          <input v-model="order.customer" type="text" placeholder="ES. Mario Rossi" required />
+    
+          <label>Email</label>
+          <input v-model="order.email" type="email" placeholder="ES. example@email.com" required />
+    
+          <label>Telefono</label>
+          <input v-model="order.phone" type="tel" placeholder="ES. 1234567890" required />
+    
+          <label>Indirizzo</label>
+          <textarea v-model="order.address" placeholder="ES. Via Roma 10, Milano" required></textarea>
+    
+          <label>Note (opzionale)</label>
+          <textarea v-model="order.notes" placeholder="ES. no le posate"></textarea>
+        </div>
+    
+        <!-- Riepilogo Ordine -->
+        <h3>Riepilogo Ordine</h3>
+        <ul>
+          <li v-for="item in cartItems" :key="item.id">
+            {{ item.name }} - Quantità: {{ item.quantity }} - Prezzo: €{{ (item.price * item.quantity).toFixed(2) }}
+          </li>
+        </ul>
+        <h3>Totale Ordine: €{{ order.price.toFixed(2) }}</h3>
+    
+        <!-- Drop-in UI -->
+        <div id="dropin-container"></div>
+        <button class="border border-0 p-2 bg-success text-light rounded-pill" @click="processPayment" :disabled="isProcessing">
+          <span v-if="isProcessing">Pagamento in corso...</span>
+          <span v-else>Conferma Ordine</span>
+        </button>
+    
+        <!-- Popup di conferma -->
+        <div v-if="showPopup" class="popup-overlay">
+          <div class="popup-content">
+            <h2>Ordine Confermato!</h2>
+            <p>Nome Cliente: {{ order.customer }}</p>
+            <p>Email: {{ order.email }}</p>
+            <p>Telefono: {{ order.phone }}</p>
+            <p>Indirizzo: {{ order.address }}</p>
+            <p>Note: {{ order.notes || 'Nessuna nota aggiunta' }}</p>
+            <h3>Dettagli Ordine</h3>
+            <ul>
+              <li v-for="item in cartItems" :key="item.id">
+                {{ item.name }} - Quantità: {{ item.quantity }} - Prezzo: €{{ (item.price * item.quantity).toFixed(2) }}
+              </li>
+            </ul>
+            <h3>Totale Pagato: €{{ order.price.toFixed(2) }}</h3>
+            <!--<p>Nonce di pagamento: {{ paymentNonce }}</p>
+            <a class="nav-link active" aria-current="page" href="#">
+                        <router-link to="/orders" class="nav-link">I Tuoi Ordini</router-link>
+                      </a>-->
+            <button @click="closePopup">Chiudi</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+   
+</template>
+
   
-  <style scoped>
+<style lang="scss" scoped>
   #checkout {
-    padding: 20px;
+    padding: 80px;
   }
   
   .form label {
@@ -259,4 +267,5 @@ import axios from 'axios';
   .popup-content button:hover {
     background-color: #0056b3;
   }
-  </style>
+
+</style>

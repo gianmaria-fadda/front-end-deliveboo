@@ -150,7 +150,7 @@ export default {
                   />
                   <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
-                    <div>{{ product.price }}€</div>
+                    <div class="fw-semibold">{{ product.price }}<span>€</span></div>
                     <p class="card-text">
                       <span class="fw-semibold text-decoration-underline"
                         >Ingredienti:</span
@@ -193,7 +193,51 @@ export default {
   </main>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '../assets/scss/partials/variables' as *;
+
+main {
+  width: 100vw;
+  padding: 100px;
+  text-align: left;
+
+  a {
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+      color: $mainColor;
+      opacity: 0.8;
+    }
+  }
+
+  .card {
+    width: 100%;
+  }
+  .card-title {
+    font-family: "Chewy", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .btn-dark {
+    background-color: $mainColor;
+    border: none;
+    border-radius: 0;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.cart {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+// Pop up carrello
 .popup {
   position: fixed;
   top: 20%;
@@ -221,4 +265,6 @@ export default {
 .popup button {
   margin-top: 10px;
 }
+
+// 
 </style>
