@@ -107,8 +107,10 @@ import axios from 'axios';
     customer: this.order.customer,
   };
 
+  console.log(orderData);
+
   try {
-    const response = await ("http://localhost:8000/api/public/order", {
+    const response = await fetch("http://localhost:8000/api/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,6 +119,7 @@ import axios from 'axios';
     });
 
     const result = await response.json();
+    console.log('risposta in JSON :', result);
     if (result.success) {
       console.log("Ordine salvato nel database:", result.order);
     } else {
