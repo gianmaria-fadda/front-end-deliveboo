@@ -11,39 +11,39 @@ export default {
 <template>
   <footer>
     <div class="container">
-      <div class="row justify-content-around">
+      <div class="row justify-content-around text-lg-start">
 
-        <div class="col-xl-3 col-lg-2 col-sm-2 pt-2 ps-3">
+        <div class="col-xl-3 col-lg-4 col-sm-6 pt-2 ps-3">
           <!-- Footer contatti--> 
           <ul>
-            <li><a href="#">
+            <li class="mb-2"><a href="#">
               <i class="fa-solid fa-comments pe-1"></i>Parla con noi</a></li>
-            <li><a href="#"><i class="fa-solid fa-phone pe-1"></i>+39 1234672341</a></li>
-            <li><a href="#"><i class="fa-solid fa-envelope pe-1"></i></a>deliveboo3@food.com</li>
+            <li class="mb-2"><a href="#"><i class="fa-solid fa-phone pe-1"></i>+39 1234672341</a></li>
+            <li class="mb-2"><a href="#"><i class="fa-solid fa-envelope pe-1"></i></a>deliveboo3@food.com</li>
           </ul>
         </div>
 
         <div class="col-xl-3 col-lg-2 col-sm-2 pt-2 ps-3">
           <!-- Footer info --> 
           <ul>
-            <li><a href="#">Termini di utilizzo</a></li>
-            <li><a href="#">Informativa sulla privacy</a></li>
-            <li><a href="#">Contattaci</a></li>
+            <li class="mb-2"><a href="#">Termini di utilizzo</a></li>
+            <li class="mb-2"><a href="#">Informativa sulla privacy</a></li>
+            <li class="mb-2"><a href="#">Contattaci</a></li>
           </ul>
         </div>
 
         <div class="col-xl-3 col-lg-2 col-sm-2 pt-2 ps-3">
           <!-- Footer info --> 
           <ul>
-            <li><a href="#">La nostra azienda</a></li>
-            <li><a href="#">Lavora con noi</a></li>
-            <li><a href="#">Esperienze dei nostri clienti</a></li>
-            <li><a href="#">Blog</a></li>
+            <li class="mb-2"><a href="#">La nostra azienda</a></li>
+            <li class="mb-2"><a href="#">Lavora con noi</a></li>
+            <li class="mb-2"><a href="#">Esperienze dei nostri clienti</a></li>
+            <li class="mb-2"><a href="#">Blog</a></li>
           </ul>
         </div>
 
         <!-- Socials -->
-        <div class="col-xl-3 col-lg-2 col-sm-2 pt-2 ps-3">
+        <div class="col-xl-3 col-lg-2 col-sm-2 pt-2 ps-3 text-center text-lg-start">
           <div class="follow">
             Seguici sui social!
           </div>
@@ -64,13 +64,13 @@ export default {
 
       
       <!-- Copyrights -->
-      <div class="row justify-content-between align-items-center">
-        <div class="col-xl-2 col-lg-2 col-sm-2 pt-2">
+      <div class="row justify-content-between align-items-center text-center text-lg-start">
+        <div class="col-xl-2 col-lg-3 col-sm-6">
           <h2>
             <a href="">DeliveBoo</a>
           </h2>
         </div>
-        <div class="col-xl-3 col-lg-2 col-sm-2 copyrights ps-3">
+        <div class="col-xl-3 col-lg-4 col-sm-6 copyrights ps-3">
           <i class="fa-regular fa-copyright text-light"></i>
           <span>
             2024 DeliveBoo
@@ -85,8 +85,6 @@ export default {
 @use '../assets/scss/partials/variables' as *;
 
 footer {
-
-  height: 240px;
   background-color: $secondColor;
   color: white;
 
@@ -142,4 +140,5 @@ a {
   font-size: small;
   opacity: 0.8;
 }
+
 </style>

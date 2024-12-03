@@ -82,29 +82,26 @@ export default {
           </div>
 
           <!-- Checkbox delle categorie -->
-          <div class="col col-md-8 col-lg-6 mx-auto d-flex flex-wrap justify-content-start fw-6">
-            
-            <div class="d-flex flex-wrap ps-5 justify-content-start">
-              <h6 class="pe-4 fw-semibold">Filtra per categorie:</h6>
-              <div v-for="category in categories" :key="category.id" class="form-check me-3 mb-2 fs-6">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  :id="category.id"
-                  :value="category.id"
-                  v-model="selectedCategories"
-                  @change="() => console.log('Categorie selezionate:', selectedCategories)"
-                />
-                <label class="form-check-label" :for="category.id">{{ category.name }}</label>
-              </div>
+          <div class="col-md-8 col-lg-6 mx-auto d-flex flex-wrap justify-content-start fw-6 mb-2">
+
+            <h6 class="pe-4 pt-sm-3 fw-semibold">Categorie:</h6>
+
+            <div v-for="category in categories" :key="category.id" class="form-check pt-sm-3 me-3 fs-6">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                :id="category.id"
+                :value="category.id"
+                v-model="selectedCategories"
+                @change="() => console.log('Categorie selezionate:', selectedCategories)"
+              />
+              <label class="form-check-label" :for="category.id">{{ category.name }}</label>
             </div>
           </div>
         </div>
-
-
-
-
       </div>
+
+
       <!-- Cards ristoranti -->
       <div v-if="filteredRestaurants.length > 0" class="container-fluid mt-3">
         <div class="row">

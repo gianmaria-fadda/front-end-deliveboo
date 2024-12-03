@@ -20,11 +20,11 @@ export default {
             <RouterLink :to="{ name:'home' }">
               <img src="../../public/img/logo-orange.png" alt="Deliveboo Logo" class="deliveboo_logo">
             </RouterLink>
-            <div class="logo_name">Deliveboo</div>
+            <div class="logo_name d-none d-sm-none d-md-block d-lg-block">Deliveboo</div>
           </div>
 
           <div class="d-flex align-items-center">
-            <router-link :to="{ name:'cart' }"  class="me-5 fs-5 border border-white border-2 rounded-pill px-3 py-1 bg-light cart-color">
+            <router-link :to="{ name:'cart' }"  class="d-none d-sm-none d-md-block d-lg-block me-5 fs-5 border border-white border-2 rounded-pill px-3 py-1 bg-light cart-color">
               <i class="fa-solid fa-cart-shopping"></i>
             </router-link>
 
@@ -50,6 +50,12 @@ export default {
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">
                       <router-link to="/orders" class="nav-link">I Tuoi Ordini</router-link>
+                    </a>
+                  </li>
+                  <!-- Link carrello visibile solo su cellulare -->
+                  <li class="nav-item d-none d-sm-block d-md-none">
+                    <a class="nav-link active" aria-current="page" href="#">
+                      <router-link to="/cart" class="nav-link">Carrello</router-link>
                     </a>
                   </li>
                   <hr>
