@@ -16,6 +16,7 @@ import axios from 'axios';
           address: "",
           notes: "",
           price: 0,
+          restaurantId: "",
         },
         cartItems: [],
         cartTotal: 0,
@@ -109,6 +110,7 @@ import axios from 'axios';
     notes: this.order.notes,
     price: this.order.price,
     customer: this.order.customer,
+    restaurantId: this.restaurantId,
   };
 
   console.log(orderData);
@@ -122,8 +124,35 @@ import axios from 'axios';
       body: JSON.stringify(orderData),
     });
 
-    const result = await response.json();
-    console.log('risposta in JSON :', result);
+  //   // const result = await response.json();
+  //   console.log('risposta in JSON :', result);
+  //   if (!response.ok) {
+  //     // console.log("Ordine salvato nel database:", result.order);
+  //     throw new Error(`errore durante la richiesta: ${response.statusText}`)
+  //   // } else {
+  //   //   console.error("Errore nel salvataggio dell'ordine:", result.error);
+  //   // }
+  // } catch (error) {
+  //   console.error("Errore durante l'invio dell'ordine:", error);
+  // }
+
+    // Controlla lo status della risposta
+    if (!response.ok) {
+      throw new Error(`Errore durante la richiesta: ${response.statusText}`);
+    }
+
+    // Controlla se la risposta è JSON
+    const textResponse = await response.text();
+    let result;
+    try {
+      result = JSON.parse(textResponse);
+      console.log('Risposta JSON:', result);
+    } catch (err) {
+      console.error("Errore nel parsing della risposta JSON:", err);
+      console.error("Contenuto della risposta:", textResponse);
+      return;
+    }
+
     if (result.success) {
       console.log("Ordine salvato nel database:", result.order);
     } else {
