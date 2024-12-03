@@ -42,8 +42,13 @@
             </li>
             <hr />
           </ul>
-          <p><strong>Totale Pagato:</strong> €{{ order.totalPrice.toFixed(2) }}</p>
-          <button class="btn-delete" @click="deleteOrder(index)">Elimina Ordine</button>
+          <div class="d-flex justify-content-between">
+            
+            <p><strong>Totale Pagato:</strong> €{{ order.totalPrice.toFixed(2) }}</p>
+
+            <button class="btn-delete border border-0 px-3 py-2 bg-danger text-light rounded-pill" @click="deleteOrder(index)">Elimina Ordine</button>
+
+          </div>
         </div>
       </div>
       <div v-else>

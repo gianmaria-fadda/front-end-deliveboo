@@ -31,7 +31,7 @@
   
       <!-- Drop-in UI -->
       <div id="dropin-container"></div>
-      <button @click="processPayment" :disabled="isProcessing">
+      <button class="border border-0 p-2 bg-success text-light rounded-pill" @click="processPayment" :disabled="isProcessing">
         <span v-if="isProcessing">Pagamento in corso...</span>
         <span v-else>Conferma Ordine</span>
       </button>
@@ -56,7 +56,7 @@
           <a class="nav-link active" aria-current="page" href="#">
                       <router-link to="/orders" class="nav-link">I Tuoi Ordini</router-link>
                     </a>-->
-          <button  @click="closePopup">Chiudi</button>
+          <button @click="closePopup">Chiudi</button>
         </div>
         
       </div>
