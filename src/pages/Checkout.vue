@@ -5,6 +5,10 @@ import axios from 'axios';
   export default {
     data() {
       return {
+        props: ['restaurantId'],
+        mounted() {
+          console.log('idRistorante', this.restaurantId); 
+        },
         order: {
           customer: "",
           email: "",

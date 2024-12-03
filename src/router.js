@@ -28,9 +28,10 @@ const router = createRouter({
             component: Cart
         },
         {
-            path: '/checkout',
+            path: '/checkout/:restaurantId',
             name: 'checkout',
-            component: Checkout
+            component: Checkout, 
+            props:true
         },
         {
             path: '/orders',
