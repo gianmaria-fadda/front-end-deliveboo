@@ -142,7 +142,7 @@ export default {
                 :key="product.id"
                 v-show="product.visible !== 0"
               >
-                <div class="card mb-3 me-4" style="width: 18rem;">
+                <div class="card mb-3 me-4 card_product" style="width: 18rem;">
                   <img
                     :src="`http://127.0.0.1:8000/storage/${product.image}`"
                     class="card-img-top"
@@ -214,12 +214,22 @@ main {
   .card {
     width: 100%;
   }
+
+  // Card del prodotto
+  .card_product {
+    height: 350px;
+
+    .card-img-top {
+      height: 150px;
+    }
+  }
+
   .card-title {
     font-family: "Chewy", system-ui;
     font-weight: 400;
     font-style: normal;
   }
-
+  // 
   .btn-dark {
     background-color: $mainColor;
     border: none;
