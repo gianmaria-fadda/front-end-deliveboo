@@ -3,12 +3,12 @@
 import axios from 'axios';
 
   export default {
-    data() {
-      return {
-        props: ['restaurantId'],
+    props: ['restaurantId'],
         mounted() {
           console.log('idRistorante', this.restaurantId); 
         },
+    data() {
+      return {
         order: {
           customer: "",
           email: "",
@@ -16,7 +16,7 @@ import axios from 'axios';
           address: "",
           notes: "",
           price: 0,
-          restaurantId: "",
+          restaurant_id: this.restaurantId,
         },
         cartItems: [],
         cartTotal: 0,
@@ -100,7 +100,8 @@ import axios from 'axios';
         });
       },
       async closePopup() {
-  this.showPopup = false;
+        console.log("restaurantId", this.restaurantId);
+        this.showPopup = false;
 
   // Invia i dati al backend
   const orderData = {
@@ -110,16 +111,23 @@ import axios from 'axios';
     notes: this.order.notes,
     price: this.order.price,
     customer: this.order.customer,
-    restaurantId: this.restaurantId,
+    restaurant_id: this.restaurantId,
+    products: this.cartItems.map(item => ({
+      id: item.id,
+      quantity: item.quantity,
+      price: item.price
+    }))
   };
 
   console.log(orderData);
 
   try {
-    const response = await fetch("http://localhost:8000/api/order", {
+    console.log("Dati da inviare:", orderData); 
+    const response = await fetch('http://localhost:8000/api/order', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+         'Accept': 'application/json'
       },
       body: JSON.stringify(orderData),
     });

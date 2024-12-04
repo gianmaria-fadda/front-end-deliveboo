@@ -87,9 +87,10 @@ export default {
             </div>
           
           <!-- Pulsante per navigare al checkout -->
-          <router-link to="/checkout/${cart[0]?.restaurantId}" class="btn btn-dark mt-3">
+          <router-link v-if="cart.length > 0 && cart[0]?.restaurantId" :to="`/checkout/${cart[0]?.restaurantId}`" class="btn btn-dark mt-3">
             Procedi al Checkout
           </router-link>
+          
         </div>
           <!-- Messaggio se il carrello è vuoto -->
           <div v-else>
