@@ -106,7 +106,7 @@ export default {
       <div v-if="filteredRestaurants.length > 0" class="container-fluid mt-3">
         <div class="row">
           <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" v-for="(restaurant) in filteredRestaurants" :key="restaurant.id">
-            <div class="card h-100">
+            <div class="card h-100 card_restaurant">
               <img
                 :src="`http://127.0.0.1:8000/storage/${restaurant.image}`"
                 class="card-img-top"
@@ -149,6 +149,14 @@ a {
   &:hover {
     color: $mainColor;
     opacity: 0.8;
+  }
+}
+
+.card_restaurant {
+  height: 350px;
+
+  .card-img-top {
+    height: 180px;
   }
 }
 
