@@ -1,15 +1,14 @@
 <script>
-import axios from 'axios';
-import Restaurant from './Restaurant.vue';
+import axios from "axios";
 
 export default {
   data() {
-    return { 
+    return {
       restaurants: [],
       categories: [],
-      selectedCategories: [], // Categorie selezionate
-      searchQuery: "" // Valore della barra di ricerca
-    }
+      selectedCategories: [],
+      searchQuery: "",
+    };
   },
   mounted() {
     this.getRestaurants();
@@ -19,7 +18,7 @@ export default {
     async getRestaurants() {
       try {
         const res = await axios.get("http://127.0.0.1:8000/api/public/restaurants");
-        this.restaurants = res.data; // Salva i dati nella proprietà restaurants
+        this.restaurants = res.data;
         console.log("Ristoranti recuperati:", res.data);
       } catch (error) {
         console.error("Errore nel recupero dei ristoranti:", error);
@@ -29,24 +28,21 @@ export default {
     async getCategories() {
       try {
         const res = await axios.get("http://127.0.0.1:8000/api/public/restaurant-categories");
-        this.categories = res.data; // Salva i dati nella proprietà categories
+        this.categories = res.data;
         console.log("Categorie recuperate:", res.data);
       } catch (error) {
         console.error("Errore nel recupero delle categorie:", error);
         alert("Impossibile recuperare i dati delle categorie.");
-        console.log("Errore dettagliato:", error.response ? error.response.data : error.message);
       }
-    }
+    },
   },
   computed: {
-    // Filtra i ristoranti in base al nome inserito nella barra di ricerca e alle categorie selezionate
     filteredRestaurants() {
       return this.restaurants.filter((restaurant) => {
-        const normalizedName = restaurant.name.toLowerCase().replace(/\s+/g, ""); // Rimuove tutti gli spazi
-        const normalizedQuery = this.searchQuery.toLowerCase().replace(/\s+/g, ""); // Rimuove tutti gli spazi
+        const normalizedName = restaurant.name.toLowerCase().replace(/\s+/g, ""); // Modificato
+        const normalizedQuery = this.searchQuery.toLowerCase().replace(/\s+/g, "");
         const matchesSearchQuery = normalizedName.includes(normalizedQuery);
 
-        // Filtra in base alle categorie selezionate (tutti i ristoranti devono avere tutte le categorie selezionate)
         const matchesCategory =
           this.selectedCategories.length === 0 ||
           this.selectedCategories.every((selectedCategory) =>
@@ -55,8 +51,8 @@ export default {
 
         return matchesSearchQuery && matchesCategory;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -110,7 +106,7 @@ export default {
               <img
                 :src="`http://127.0.0.1:8000/storage/${restaurant.image}`"
                 class="card-img-top"
-                :alt="restaurant.name"
+                :alt="restaurant.restaurant_name"
               />
 
               <div class="card-body">
