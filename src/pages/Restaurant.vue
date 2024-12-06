@@ -116,7 +116,7 @@ export default {
       <div v-if="restaurant" class="card mb-3">
         <img
           :src="`http://127.0.0.1:8000/storage/${restaurant.image}`"
-          class="card-img-top"
+          class="card-img-top card-img-restaurant"
           alt="Immagine del ristorante"
         />
 
@@ -135,14 +135,14 @@ export default {
             <h3>Piatti</h3>
 
             <div
-              class="dishes_cards_container d-flex flex-wrap justify-content-even"
+              class="dishes_cards_container d-flex flex-wrap justify-content-start ps-3"
             >
               <div
                 v-for="product in restaurant.products"
                 :key="product.id"
                 v-show="product.visible !== 0"
               >
-                <div class="card mb-3 me-4 card_product" style="width: 18rem;">
+                <div class="card mb-3 me-4 card_product" style="width: 17rem;">
                   <img
                     :src="`http://127.0.0.1:8000/storage/${product.image}`"
                     class="card-img-top"
@@ -195,6 +195,7 @@ export default {
 
 <style lang="scss" scoped>
 @use '../assets/scss/partials/variables' as *;
+@use '../assets/scss/partials/mixins' as *;
 
 main {
   width: 100vw;
@@ -213,6 +214,12 @@ main {
 
   .card {
     width: 100%;
+
+    .card-img-restaurant{
+
+      height: 350px;
+      object-fit: cover;
+    }
   }
 
   // Card del prodotto
