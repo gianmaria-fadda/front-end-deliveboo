@@ -11,9 +11,9 @@ export default {
 <template>
   <footer>
     <div class="container">
-      <div class="row justify-content-around text-lg-start">
+      <div class="row justify-content-center text-center">
 
-        <div class="col-xl-3 col-lg-4 col-sm-6 pt-2 ps-3">
+        <div class="col-xl-3 col-lg-6 col-sm-12 pt-2 ps-3">
           <!-- Footer contatti--> 
           <ul>
             <li class="mb-2"><a href="#">
@@ -23,7 +23,7 @@ export default {
           </ul>
         </div>
 
-        <div class="col-xl-3 col-lg-2 col-sm-2 pt-2 ps-3">
+        <div class="col-xl-3 col-lg-6 col-sm-12 pt-2 ps-3">
           <!-- Footer info --> 
           <ul>
             <li class="mb-2"><a href="#">Termini di utilizzo</a></li>
@@ -32,7 +32,7 @@ export default {
           </ul>
         </div>
 
-        <div class="col-xl-3 col-lg-2 col-sm-2 pt-2 ps-3">
+        <div class="col-xl-3 col-lg-6 col-sm-12 pt-2 ps-3">
           <!-- Footer info --> 
           <ul>
             <li class="mb-2"><a href="#">La nostra azienda</a></li>
@@ -43,7 +43,7 @@ export default {
         </div>
 
         <!-- Socials -->
-        <div class="col-xl-3 col-lg-2 col-sm-2 pt-2 ps-3 text-center text-lg-start">
+        <div class="col-xl-3 col-lg-6 col-sm-12 pt-2 text-center ps-5">
           <div class="follow">
             Seguici sui social!
           </div>
