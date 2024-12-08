@@ -153,6 +153,7 @@ a {
 
   .card-img-top {
     height: 180px;
+    object-fit: cover;
   }
 }
 
